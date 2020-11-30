@@ -1,0 +1,44 @@
+Modifier Profil : 
+Description : le visiteur peut renseigner des informations personnelles qui auraient soit changé, soit des informations
+ sur lesquels il se serait trompé lors de linscription, ou de la dernière modifiction.  
+
+Acteurs : membre
+
+Prérequis : informations personnelles à jour.
+Etapes :
+1.	Le client se connecte si ce nest pas déjà fait 
+2.	Clique sur son profil
+3.	L’application affiche les informations de son profil
+4.	Clique sure « modifier vos données ».
+5.	L’application affiche le formulaire de modifications des données 
+6.	L’utilisateur modifie les informations qu’il veut
+7.	Valide les mises à jour
+
+ Exception :
+        - si le client na pas de compte.
+
+
+
+@startuml
+actor membre_auth as membre
+participant Application as App
+participant UIManager  as UIM
+database membreDatabase as dataM
+
+membre -> App ++ #green : clickProfil()
+App --> membre --: displayProfil()
+
+membre -> App ++ #green : clickUpdateProfil()
+App --> membre -- : displayUpdateForm()
+
+membre -> App ++ #yellow : editProfil()
+App -> UIM ++ #yellow : makeChange()
+UIM --> UIM : conformChanges()
+UIM --> App -- : displayChanges()
+App -> dataM ++ #yellow: saveChanges()
+dataM --> membre -- : conformMessage()
+
+
+
+
+@enduml

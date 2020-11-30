@@ -1,0 +1,42 @@
+
+
+@startuml
+Class Utilisateur_Anonyme {
+	int id
+
+}
+Class RegistrationFormFc{
+	int id 
+	String identifiant
+	String mdp
+}
+Class RegistrationForm{
+
+}
+Class Application{ 
+
+}
+
+Class FranceConnect{
+	connect()
+}
+
+Class Serveur{
+	
+}
+
+Class SitePartenaire{
+
+}
+
+
+Utilisateur_Anonyme <-o Application :  manage
+Application o-o UIManager : manage
+Application -o FranceConnect : connect
+UIManager -|> RegistrationFormFc : manage
+UIManager -|> RegistrationForm : manage
+Serveur -> Application : transmet
+SitePartenaire -> Application : transmet 
+
+
+@enduml

@@ -1,0 +1,56 @@
+
+Rechercher une œuvre :
+    Description : le membre peut renseigner des informations sur une œuvre afin de la trouver.
+
+    Acteurs : membre
+
+    Prérequis : informations, sur l oeuvre recherché moteur de recherche
+
+    Etapes :
+1.	Le client se rend sur le site.
+2.	Il clique sur la barre de recherche.
+3.	Tape le nom de l œuvre recherché
+4.	Valide
+5.	L’application affiche les œuvres correspondantes 
+6.	Regarde dans la liste proposée si l œuvre est dans la liste.
+
+    Exception :
+        - Œuvre non répertorié.
+
+
+
+@startuml
+actor membre
+participant Application
+participant UIManager as UIM
+database OeuvreDatabase
+
+
+membre ->  Application ++ #green: find Oeuvre
+
+Application -> UIM++ #green : service Back
+UIM-> OeuvreDatabase ++ #yellow: requete
+
+
+alt Oeuvre Exist
+
+OeuvreDatabase -> controle: Exist
+UIM-> Application -- : show
+Application -> membre : Display
+
+
+else Oeuvre already exist
+
+OeuvreDatabase -> Application -- : Not Exist
+
+Application -> membre -- : Display error message
+
+
+
+end
+
+
+
+
+
+@enduml

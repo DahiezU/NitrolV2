@@ -1,0 +1,37 @@
+@startuml
+
+Class Application {
+
+}
+
+Class Admin {
+    - Int id  
+    # String Indentifiant 
+    # String Mail   
+    # String role = Admin     
+}
+
+Class UIManager {
+    # Int IdOeuvre
+    # deleteOeuvre()
+
+}
+
+Class DataO{
+     - Int id
+    # String title
+    # String autors
+    # String genre
+    # Date date
+    # String copyrightType 
+    # Int nbCopie
+    # Bool availability
+ 
+
+}
+
+
+Admin <-o Application : manage 
+Application -> UIManager : informe
+Application -> DataO : connection
+@enduml

@@ -1,0 +1,113 @@
+Louer une œuvre :
+Description : le membre peut aller enprunter une oeuvre non libre de droit dans un un des repertoires propsé, à un prix fixé, pour un temps fixé
+
+  	Acteurs : Membre connecté , serveur 
+
+   	Prérequis : un œuvre privé, être un membre, disponibilité de lœuvre.
+    	Etapes :
+
+1.	Le client se rend sur l’application. 
+2.	Il se connecte ou sinscrit si il n a pas de compte.
+3.	Il clique sur l’onglets œuvres non libre de droit
+4.	L’application affiche les œuvres non libres de droit 
+5.	Choisit une oeuvre dans la liste des œuvres disponibles privées.
+6.	L’application affiche la fiche technique de l’œuvre.
+7.	Clique sur louer l œuvre.
+8.	L’œuvre apparait dans son répertoire personnel
+9.	Au bout d’un certain temps elle disparait de son répertoire personnel 
+
+    Exception :
+        - Œuvre pas disponible.
+
+
+
+@startuml
+actor Membre_Client  as membre
+participant Application  as App
+participant UIManager as UIM
+database databaseMembre as dataM 
+database databaseOeuvre as dataO 
+participant ProduitPanier
+participant Banque
+
+membre -> App  : auth()
+activate App
+App -> UIM : existClient() 
+activate UIM
+UIM -> dataM : check()
+activate dataM
+dataM --> App : Ismember
+deactivate dataM
+deactivate UIM
+
+App --> membre : show menu 
+deactivate App
+activate membre
+
+
+
+membre -> App : ClickCatalogue()
+activate App
+
+App --> membre : ShowCatalogue()
+deactivate App
+membre -> App : ClickOeuvre()
+deactivate membre
+activate App
+loop 
+App -> UIM : availableOeuvre()
+activate UIM
+UIM -> dataO : check()
+activate dataO
+dataO --> UIM : Isavaible
+deactivate dataO
+UIM --> App : showOeuvre()
+deactivate UIM
+App --> membre : displayDataOeuvre()
+deactivate App
+
+membre -> App : clickOrder()
+activate App
+App -> UIM : save()
+activate UIM
+UIM -> ProduitPanier : createShoppingCart()
+UIM --> App : success()
+deactivate UIM
+App --> membre : displayPaymentInterface()
+deactivate App
+end
+
+membre -> App : clickPay()
+activate App
+activate App
+App -> UIM : PayOrder()
+activate UIM
+activate UIM
+UIM -> Banque : verifWithBanque()
+activate Banque
+activate Banque
+
+
+alt Payment successful  
+
+Banque --> App : confirmPayment()
+deactivate Banque
+deactivate UIM
+App --> membre : displaySuccesfulPayment()
+deactivate App
+
+else Payment failed 
+
+Banque --> App : PaymentFailed()
+deactivate Banque
+deactivate UIM
+App --> membre : displayFailedPayment()
+deactivate App
+end
+
+
+
+
+
+
+@enduml

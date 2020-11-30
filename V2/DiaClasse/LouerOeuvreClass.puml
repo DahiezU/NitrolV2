@@ -1,0 +1,59 @@
+
+
+
+@startuml
+Class Member {
+    Int id  
+    String Indentifiant 
+    String Mail   
+    String role     
+    
+}
+Class Application {
+
+}
+
+Class UIManager {
+    sendrequete()
+    connectBanque()
+}
+
+Class DataM{
+     Int id  
+    String Indentifiant 
+    String Mail 
+    String Nom  
+    String Prenom  
+    Date DateInscription 
+    Date DateConnexion  
+    String role     
+}
+Class DataO{
+    - Int id
+    # String title
+    # String autors
+    # String genre
+    # Date date
+    # String copyrightType 
+    # Int nbCopie
+    # Bool availability
+}
+
+Class Product{
+
+}
+
+Class Banque {
+
+}
+
+
+Member -o Application : manage
+Application o-o UIManager : mange
+UIManager -o DataM : connect
+UIManager -o DataO : connect
+UIManager  -o Product : add
+UIManager -o Banque : connect
+Banque o-o Application : modifie
+
+@enduml

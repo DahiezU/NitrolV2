@@ -1,0 +1,60 @@
+Devenir Bibliothecaire
+	Description : Un membre demande à devenir Bibliothecaire.
+	Acteurs : Membre, Bibliothecaire
+	Prérequis : Il existe au moins un Bibliothecaire actif.
+	Étapes :
+1.	Un membre demande à l’application à devenir es.
+2.	L’application enregistre la demande et soumet la demande aux es.
+3.	L’application sur le média d’un autre Bibliothecaire transmet à son 
+utilisateur la demande pour modération.
+4.	L’application demande au Bibliothecaire s’il :
+•	accepte,
+•	rejette,
+•	n’a pas d’avis,
+•	ou souhaite ignorer la candidature.
+5.	Le Bibliothecaire indique à l’application quel est son choix.
+6.	L’application partage de façon anonyme et unique ce choix avec les autres
+ applications sur les médias des autres es.
+7.	Le Bibliothecaire peut modifier son choix tant que le délai imparti n’est
+ pas écoulé.
+8.	Une fois le délai écoulé, les applications des es propagent aux
+ autres applications la décision automatique prise ainsi :
+•	Si la majorité des es ont accepté la candidature du membre alors
+ celui-ci devient Bibliothecaire.
+9.	Le membre consulte la décision depuis l’application sur son média.
+10.	Si l’application du futur Bibliothecaire constate qu’il est promu Bibliothecaire 
+alors il reçoit les droits lui permettant d’accéder à l’ensemble des contenus et de pouvoir accepter ou refuser les modérations.
+11.	Sinon l’application indique le refus de sa promotion.
+	Scénarios alternatifs :
+La majorité des es refuse la promotion.
+
+	Scénarios erreurs :
+	Données, documents, écrans :
+
+@startuml
+actor Membre 
+actor Bibliothecaire
+participant Application as App 
+participant UIManager as UIM 
+   
+Membre -> App : Proposition Candidature Bibliothecaire 
+App -> UIM : NewApplication()
+UIM -> Bibliothecaire : Affiche Candidature  (accepte,rejette,n’a pas d’avis, ignorer)
+Bibliothecaire --> App : Reponse candidature 
+App -> UIM : Result()
+UIM -> Bibliothecaires : affiche les resultat de facon anonyme
+Alt Modification choix Delai imparti
+Bibliothecaire -> App : Modification choix 
+App -> UIM : Result()
+UIM -> Bibliothecaires : affiche les resultat de facon anonyme
+Else  Temps écoulé 
+UIM -> App : Vote effectué 
+Alt Acceptation Candidature 
+App -> Membre:  Promotion et Activation Droits 
+else Refus Candidature 
+App -> Membre : Message refus de promotion
+End 
+End   
+
+
+@enduml

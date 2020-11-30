@@ -1,0 +1,32 @@
+
+@startuml
+
+Class Application {
+
+}
+
+Class Membre {
+    - Int id  
+    # String Indentifiant 
+    # String Mail   
+    # String role = Membre     
+}
+
+Class UIManager {
+    # Int idCandidat
+    # sondage()
+	
+
+}
+
+
+Class Bibliothecaires {
+    
+}
+
+
+
+Membre <-o Application : manage 
+Application -> UIManager : informe
+UIManager -> Bibliothecaires : informe
+@enduml

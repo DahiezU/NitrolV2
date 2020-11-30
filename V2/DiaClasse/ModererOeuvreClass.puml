@@ -1,0 +1,36 @@
+
+
+@startuml 
+
+Class Member {
+	- Int id  
+    # String Indentifiant 
+    # String Mail   
+    # String role = Membre    
+}
+
+Class UIManager {
+
+}
+
+Class Application {
+
+}
+
+Class DataO {
+	- Int id
+    # String title
+    # String autors
+    # String genre
+    # Date date
+    # String copyrightType 
+    # Int nbCopie
+    # Bool availability
+}
+
+
+Application -o UIManager : manage
+Member -o Application : manage
+Application - DataO : connect 
+
+@enduml

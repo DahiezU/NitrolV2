@@ -1,0 +1,42 @@
+Supprimer profil : 
+    Description : le membre peut supprimer son profil à tout moment, ladmin peut aussi supprimer le profil dautre membre
+
+    Acteurs : membre et admin
+
+    Prérequis : être connecté. 
+
+    Etapes :
+1.	Le client se connecte 
+2.	Il clique sur son profil 
+3.	L’application affiche les informations de son profil 
+4.	Il clique sur « Supprimer mon profil »
+5.	Valide la suppression
+
+
+    Exception :
+        - si le client n a pas de compte.
+
+
+
+@startuml
+actor membre_auth as membre
+participant Application as App
+participant UIManager  as UIM
+database membreDatabase as dataM
+
+membre -> App ++ #green : clickProfil()
+App --> membre --: displayProfil()
+
+membre -> App ++ #green : clickDeleteProfil()
+App --> membre -- : displayDeleteMessage()
+membre -> App : Validate 
+App -> UIM ++ #yellow : Delete()
+UIM -> UIM : conformDelete()
+UIM --> App -- : displayDeleteMessage()
+App -> dataM ++ #yellow: deleteProfil()
+dataM --> membre -- : conformMessage()
+
+
+
+
+@enduml

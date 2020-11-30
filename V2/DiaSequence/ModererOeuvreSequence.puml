@@ -1,0 +1,61 @@
+Modérer une œuvre numérisée
+	Description : Les Bibliothecaires sont avertis des numérisations œuvres à modérer.
+	Acteurs : Bibliothecaire, serveur de la Bibliothèque Nationale de France
+	Prérequis :Le fichier d’une œuvre numérisée doit avoir été déposé et soumis en modération
+	Étapes :
+1.	L’un des Bibliothecaires se connecte à l’application.
+2.	L’application lui affiche la liste des fichiers d’œuvres numérisées soumises.
+3.	Le Bibliothecaire positionne ses filtres pour ne voir que les œuvres susceptibles de l’intéresser.
+4.	L’application n’affiche que les résultats correspondant aux filtres.
+5.	Le Bibliothecaire positionne les tris pour les afficher dans l’ordre voulu.
+6.	L’application affiche les résultats dans l’ordre souhaité.
+7.	Le Bibliothecaire sélectionne un fichier d’une œuvre.
+8.	L’application affiche les informations saisies par le membre ayant soumis l’œuvre.
+9.	L’application affiche un lecteur spécifique au type de fichier.
+10.	Le Bibliothecaire parcourt l’œuvre.
+11.	Le Bibliothecaire complète les informations sur l’œuvre.
+12.	Le Bibliothecaire accepte l’œuvre en précisant sa nature.
+13.	@TODO
+	Scénarios alternatifs :
+	Scénarios erreurs :
+
+@startuml
+actor Bibliothecaire
+participant UIManager as UIM 
+participant Application as App
+participant ServeurBiblio as Serveur
+Bibliothecaire -> App  : Connection 
+App -> Bibliothecaire : Affiche notification 
+Bibliothecaire -> App : Selectionne filtres
+App --> Bibliothecaire : Affiche oeuvres correspondantes
+Bibliothecaire -> App : Selectionne Ordre d'affichage 
+App --> Bibliothecaire : Affiche oeuvres dans l'ordre voulu
+Bibliothecaire -> App : Click fichier
+App --> Bibliothecaire : Affiche informations saisies par le membre et le lecteur spécifique
+Bibliothecaire -> Bibliothecaire : Parcours l'oeuvre
+Bibliothecaire -> App : Complete oeuvre 
+Bibliothecaire -> App : Accepte Oeuvre 
+App -> Serveur : Envoie oeuvre dans le serveur 
+
+@enduml
+
+@startuml
+actor Bibliothecaire
+participant UIManager as UIM 
+participant Application as App
+participant ServeurBiblio as Serveur
+Bibliothecaire -> App  : Connection
+App -> Serveur : Cherche oeuvre :
+Serveur --> App :  Prend les oeuvres
+App -> Bibliothecaire : Affiche notification 
+Bibliothecaire -> App : Selectionne filtres
+App --> Bibliothecaire : Affiche oeuvres correspondantes
+Bibliothecaire -> App : Selectionne Ordre d'affichage 
+App --> Bibliothecaire : Affiche oeuvres dans l'ordre voulu
+Bibliothecaire -> App : Click fichier
+App --> Bibliothecaire : Affiche informations saisies par le membre et le lecteur spécifique
+Bibliothecaire -> Bibliothecaire : Parcours l'oeuvre
+Bibliothecaire -> App : Complete oeuvre 
+Bibliothecaire -> App : Accepte Oeuvre 
+App -> Serveur : Envoie oeuvre dans le serveur 
+@enduml

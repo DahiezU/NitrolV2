@@ -1,0 +1,42 @@
+Supprimer une œuvre : 
+
+    Description : l admin peut supprimer une oeuvre si il le veut, la suppression de l oeuvre entrainera la destruction de tous les champs qu elle comporte (titre, date, description, etc.)
+
+Acteurs : admin
+
+Prérequis :  est connecté en tant qu admin
+
+     Etapes :
+1.	L’admin se connecte
+2.	Il recherche une œuvre susceptible de l’intéresser
+3.	Clique sur l œuvre en question 
+4.	L’application affiche la fiche technique de l’œuvre
+5.	Se rende sur l œuvre en question 
+6.	Clique sur supprimer l œuvre
+7.	L’application supprime l œuvre de la base de données.
+
+    Exception :
+        -  il n est pas administrateur
+
+
+
+
+@startuml
+actor Admin 
+participant Application as App
+participant UIManager as  UIM 
+database oeuvreDatabase as dataO
+
+Admin-> App ++ #green : clickOeuvre()
+App -> Admin--: displayOeuvre()
+
+Admin-> App ++ #green : clickDeleteOeuvre()
+App -> Admin-- : displayDeleteMessage()
+Admin-> App : Validate 
+App -> UIM ++ #yellow : Delete()
+UIM -> UIM : conformDelete()
+UIM -> App -- : deleteMessage()
+App -> dataO ++ #yellow: deleteOeuvre()
+dataO -> Admin-- : conformMessage()
+
+@enduml
